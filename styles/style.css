@@ -1,0 +1,295 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+.main-body{
+    background-image: url('../assets/main-background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Ghostly glowing effect for the header */
+#main-header h1 {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 100px;
+    text-align: center;
+    margin-top: 20px;
+    color: #fff;
+    text-shadow:
+        0 0 10px #fff,
+        0 0 20px #8ecaff,
+        2px 2px 4px rgba(0,0,0,0.5);
+    letter-spacing: 4px;
+}
+#main-header p {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 2rem;
+    color: #8ecaff;
+    text-align: center;
+    margin-top: 10px;
+    letter-spacing: 2px;
+    text-shadow:
+        0 0 8px #fff,
+        0 0 16px #8ecaff,
+        1px 1px 2px rgba(0,0,0,0.3);
+    opacity: 0.85;
+    animation: ghost-fade 2.5s ease-in-out infinite;
+}
+
+@keyframes ghost-fade {
+    0%, 100% { opacity: 0.85; transform: translateY(0);}
+    50% { opacity: 1; transform: translateY(-8px);}
+}
+
+#choose-player {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    background: rgba(30, 60, 90, 0.3);
+    border-radius: 15px;
+    box-shadow: 0 4px 32px 0 rgba(114, 179, 250, 0.15);
+    padding: 30px 40px;
+}
+#choose-player button {
+    padding: 14px 32px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(135deg, rgba(202,230,250,0.85) 60%, rgba(142,202,255,0.7) 100%);
+    color: #2d3a4a;
+    box-shadow: 0 2px 24px 0 rgba(114, 179, 250, 0.35), 0 0 16px 2px #8ecaff55;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 2px;
+    transition: 
+        background 0.4s cubic-bezier(.4,2,.6,1),
+        box-shadow 0.3s,
+        transform 0.2s;
+}
+#choose-player button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 30px;
+    box-shadow: 0 0 40px 10px #8ecaff55, 0 0 80px 20px #fff2;
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 0;
+}
+#choose-player button::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 1;
+}
+#choose-player button:hover {
+    background: linear-gradient(135deg, #8ecaff 60%, #fff 100%);
+    box-shadow: 0 4px 32px 0 #8ecaff, 0 0 32px 8px #fff8;
+    transform: scale(1.08) rotate(-2deg);
+    animation: ghost-hover 0.7s cubic-bezier(.4,2,.6,1);
+}
+#choose-player button:hover::after {
+    opacity: 1;
+}
+#choose-player button:active {
+    background: linear-gradient(135deg, #c2e6fa 60%, #8ecaff 100%);
+    transform: scale(0.97);
+    box-shadow: 0 1px 8px 0 #8ecaff88;
+}
+@keyframes ghost-hover {
+    0%   { transform: scale(1) rotate(0deg);}
+    30%  { transform: scale(1.12) rotate(-3deg);}
+    60%  { transform: scale(1.05) rotate(2deg);}
+    100% { transform: scale(1.08) rotate(-2deg);}
+}
+
+/* Floating Ghosts Animation */
+.floating-ghosts {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.ghost {
+    position: absolute;
+    width: 40px;      /* reduced from 70px */
+    height: 50px;     /* reduced from 90px */
+    background: rgba(255,255,255,0.92);
+    border-radius: 20px 20px 20px 20px / 28px 28px 20px 20px;
+    box-shadow: 0 0 16px 4px #8ecaff33, 0 0 32px 8px #fff4;
+    opacity: 0.85;
+    overflow: visible;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+.ghost::after {
+    /* Wavy animated tail */
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -6px;
+    width: 100%;
+    height: 16px;
+    background: url("data:image/svg+xml;utf8,<svg width='40' height='16' xmlns='http://www.w3.org/2000/svg'><path d='M0,10 Q6,16 12,10 Q20,2 28,10 Q34,16 40,10 L40,16 L0,16 Z' fill='white' fill-opacity='0.92'/></svg>");
+    background-size: 40px 16px;
+    animation: ghost-tail-wave 2.5s infinite linear;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Eyes */
+.ghost-eye {
+    position: absolute;
+    top: 21px;    /* adjusted for new size */
+    left: 9px;
+    width: 7px;   /* reduced from 12px */
+    height: 7px;  /* reduced from 12px */
+    background: #8ecaff;
+    border-radius: 50%;
+    box-shadow: 13px 0 #8ecaff;
+    opacity: 0.85;
+    z-index: 3;
+    animation: ghost-eye-blink 3s infinite;
+}
+
+@keyframes ghost-eye-blink {
+    0%, 90%, 100% { height: 12px; }
+    95% { height: 4px; }
+}
+
+/* Individual ghost positions and animations */
+.ghost1 {
+    left: 2vw;  top: 8vh;
+    animation: float-ghost1 14s linear infinite;
+}
+.ghost2 {
+    left: 45vw; top: 2vh;
+    animation: float-ghost2 16s linear infinite;
+}
+.ghost3 {
+    right: 2vw; top: 10vh;
+    animation: float-ghost3 13s linear infinite;
+}
+.ghost4 {
+    left: 2vw;  bottom: 8vh;
+    animation: float-ghost4 15s linear infinite;
+}
+.ghost5 {
+    right: 2vw; bottom: 10vh;
+    animation: float-ghost5 17s linear infinite;
+}
+.ghost6 {
+    left: 10vw; top: 85vh;
+    animation: float-ghost6 18s linear infinite;
+}
+.ghost7 {
+    right: 10vw; top: 85vh;
+    animation: float-ghost7 19s linear infinite;
+}
+.ghost8 {
+    left: 85vw; top: 50vh;
+    animation: float-ghost8 20s linear infinite;
+}
+
+/* Example keyframes for gentle floating */
+@keyframes float-ghost1 {
+    0%   { transform: translateY(0) scale(1) rotate(-8deg);}
+    50%  { transform: translateY(20px) scale(1.05) rotate(4deg);}
+    100% { transform: translateY(0) scale(1) rotate(-8deg);}
+}
+@keyframes float-ghost2 {
+    0%   { transform: translateY(0) scale(1) rotate(8deg);}
+    50%  { transform: translateY(25px) scale(1.08) rotate(-4deg);}
+    100% { transform: translateY(0) scale(1) rotate(8deg);}
+}
+@keyframes float-ghost3 {
+    0%   { transform: translateY(0) scale(1) rotate(0deg);}
+    50%  { transform: translateY(18px) scale(1.03) rotate(-2deg);}
+    100% { transform: translateY(0) scale(1) rotate(0deg);}
+}
+@keyframes float-ghost4 {
+    0%   { transform: translateY(0) scale(1) rotate(-6deg);}
+    50%  { transform: translateY(-20px) scale(1.07) rotate(3deg);}
+    100% { transform: translateY(0) scale(1) rotate(-6deg);}
+}
+@keyframes float-ghost5 {
+    0%   { transform: translateY(0) scale(1) rotate(4deg);}
+    50%  { transform: translateY(-25px) scale(1.05) rotate(-2deg);}
+    100% { transform: translateY(0) scale(1) rotate(4deg);}
+}
+@keyframes float-ghost6 {
+    0%   { transform: translateY(0) scale(1) rotate(0deg);}
+    50%  { transform: translateY(-18px) scale(1.09) rotate(2deg);}
+    100% { transform: translateY(0) scale(1) rotate(0deg);}
+}
+@keyframes float-ghost7 {
+    0%   { transform: translateY(0) scale(1) rotate(-3deg);}
+    50%  { transform: translateY(-22px) scale(1.04) rotate(3deg);}
+    100% { transform: translateY(0) scale(1) rotate(-3deg);}
+}
+@keyframes float-ghost8 {
+    0%   { transform: translateY(0) scale(1) rotate(2deg);}
+    50%  { transform: translateY(18px) scale(1.06) rotate(-2deg);}
+    100% { transform: translateY(0) scale(1) rotate(2deg);}
+}
+
+/* Add eyes to each ghost using pseudo-elements or extra divs */
+.ghost1::after, .ghost2::after, .ghost3::after {
+    /* already used for ghost tail, so add eyes as child divs in HTML */
+}
+
+#main-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    color: #8ecaff;
+    font-size: 1.1rem;
+    letter-spacing: 1.5px;
+    text-align: center;
+    padding: 18px 0 14px 0;
+    z-index: 100;
+    opacity: 0.97;
+    transition: background 0.3s, color 0.3s;
+    margin: 0 !important;
+}
+
+#main-footer p {
+    margin: 0;
+    color: #8ecaff;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+#main-footer p a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 
+        color 0.2s,
+        background 0.2s,
+        box-shadow 0.2s;
+}
+
+#main-footer p a:hover {
+    color: #ffb300;
+}
